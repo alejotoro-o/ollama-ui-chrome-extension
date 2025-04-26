@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Ollama UI Chrome Extension",
+    "version": "1.0.0",
+    "description": "The Ollama UI Chrome Extension provides a user interface to chat with a local LLM.",
+    "action": {
+        "default_popup": "index.html"
+    },
+    "permissions": [
+      "storage",
+      "tabs"
+    ]
+}
