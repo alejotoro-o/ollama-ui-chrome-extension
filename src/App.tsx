@@ -37,7 +37,7 @@ export default function App() {
 
             {/* Message Tab */}
             <section className={`${isConfig ? "hidden" : "block"}`}>
-                <Chat />
+                <Chat config={config} />
                 {config.model}
             </section>
         </main>
