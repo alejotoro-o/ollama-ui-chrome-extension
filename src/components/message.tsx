@@ -1,9 +1,17 @@
+interface MessageProps {
+    role: string,
+    message: string
+}
 
-
-export default function Message() {
+export default function MessageBox({ role, message }: MessageProps) {
     return (
-        <div>
-            This is a message!
+        <div className="flex flex-col">
+            <div>
+                {message}
+            </div>
+            <div>
+                {role}
+            </div>
         </div>
     )
 }

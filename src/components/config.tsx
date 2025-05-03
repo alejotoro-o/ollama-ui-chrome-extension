@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 
 import * as ollama from "../lib/ollama"
-
-interface FormObject {
-    [key: string]: string
-}
+import { FormObject } from "../lib/types";
 
 interface ConfigProps {
-    config: FormObject
-    setConfig: (value: FormObject) => void
+    // config: FormObject,
+    setConfig: (value: FormObject) => void,
+    hasConfig: boolean,
+    setHasConfig: (value: boolean) => void,
 }
 
-export default function Config({ config, setConfig }: ConfigProps) {
+export default function Config({ setConfig, hasConfig, setHasConfig }: ConfigProps) {
 
     const [ollamaVersion, setOllamaVersion] = useState("Loading...")
     const [ollamaLocalModels, setOllamaLocalModels] = useState([])
@@ -56,6 +55,9 @@ export default function Config({ config, setConfig }: ConfigProps) {
         // console.log(formObject);
 
         chrome.storage.local.set({ "config": formObject }).then(() => {
+            if (!hasConfig) {
+                setHasConfig(true)
+            }
             console.log("Config saved successfully!");
         });
 
@@ -68,7 +70,7 @@ export default function Config({ config, setConfig }: ConfigProps) {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="model">Model</label>
-                    <select name="model" id="model" value={config.model || ""}>
+                    <select name="model" id="model">
                         {ollamaLocalModels.map((model) => (
                             <option key={model} value={model}>{model}</option>
                         ))}
