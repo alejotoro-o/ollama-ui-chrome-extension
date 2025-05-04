@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { FormObject, Message } from "../lib/types";
 
@@ -10,6 +10,10 @@ export default function Chat({ config }: {config: FormObject}) {
     const [message, setMessage] = useState<string>("")
     const [messages, setMessages] = useState<Message[]>([])
     const [isLoading, setIsLoading] = useState(false)
+
+    // Create a ref for the messages container (i.e., messages-box)
+    const messagesBoxRef = useRef<HTMLDivElement>(null);
+
 
     // Load saved messages when component mounts
     useEffect(() => {
@@ -63,6 +67,17 @@ export default function Chat({ config }: {config: FormObject}) {
 
     }, [messages, config.model]); // This effect runs when messages changes
 
+    // Auto-scroll messages container to the bottom on new messages or when isLoading is toggled
+    useEffect(() => {
+        if (messagesBoxRef.current) {
+            messagesBoxRef.current.scrollTo({
+                top: messagesBoxRef.current.scrollHeight,
+                behavior: "smooth" // For a smooth scrolling effect; you can omit this if you prefer instant scroll
+            });
+        }
+    }, [messages, isLoading]);
+
+
     const handleSubmit = (e: any) => {
 
         e.preventDefault();
@@ -86,9 +101,9 @@ export default function Chat({ config }: {config: FormObject}) {
     }
 
     return (
-        <div className="p-2">
+        <div className="p-2 flex flex-col h-full">
             {/* Messages */}
-            <div className="flex flex-col space-y-2">
+            <div className="flex-1 space-y-2 overflow-y-auto max-h-[340px]" ref={messagesBoxRef}>
                 {messages.map(({role, content}, index) => (
                     <MessageBox key={index} role={role} message={content} />
                 ))}

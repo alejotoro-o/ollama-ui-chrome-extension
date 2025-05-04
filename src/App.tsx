@@ -42,16 +42,43 @@ export default function App() {
 
             {/* Toolbar */}
             <section className='flex flex-row items-center px-2'>
-                <div className='flex flex-row'>
+                <div className='flex flex-row items-center'>
                     <img src='/images/icon-16.png' />
-                    <h1 className='text-base font-bold'>Ollama UI Extension</h1>
+                    <h1 className='ms-1 text-base font-bold'>Ollama UI Extension</h1>
                 </div>
                 <div className='ml-auto flex flex-row space-x-1'>
                     <button title='Open Side Panel' className='cursor-pointer' onClick={openSidePanel}>
                         <PanelRight size={16} />
                     </button>
-                    <button title='Settings' className='cursor-pointer' onClick={() => setIsConfig(!isConfig)} disabled={!hasConfig}>
+                    <button
+                        title="Settings"
+                        className="cursor-pointer flex items-center"
+                        onClick={() => setIsConfig(!isConfig)}
+                        disabled={!hasConfig}
+                    >
                         <Settings size={16} />
+
+                        <div className="relative w-4 h-4">
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className={`absolute top-0 left-0 transition-all duration-300 transform ${isConfig ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+                            >
+                                <path d="M10 6 L16 12 L10 18" stroke="black" strokeWidth="2" fill="none" />
+                            </svg>
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className={`absolute top-0 left-0 transition-all duration-300 transform ${isConfig ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+                            >
+                                <line x1="6" y1="6" x2="18" y2="18" stroke="black" strokeWidth="2" />
+                                <line x1="18" y1="6" x2="6" y2="18" stroke="black" strokeWidth="2" />
+                            </svg>
+                        </div>
                     </button>
                 </div>
             </section>
@@ -64,7 +91,7 @@ export default function App() {
             </section>
 
             {/* Message Tab */}
-            <section className={`${isConfig ? "hidden" : "block"}`}>
+            <section className={`${isConfig ? "hidden" : "block"} flex flex-col h-full`}>
                 <Chat config={config} />
             </section>
         </main>

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import * as ollama from "../lib/ollama"
 import { FormObject } from "../lib/types";
 
+import { Save } from "lucide-react";
+
 interface ConfigProps {
     // config: FormObject,
     setConfig: (value: FormObject) => void,
@@ -65,18 +67,24 @@ export default function Config({ setConfig, hasConfig, setHasConfig }: ConfigPro
     }
     
     return (
-        <div className="flex flex-col">
+        <div className="p-2 flex flex-col space-y-2">
             <h2>Ollama {ollamaVersion}</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="flex flex-col space-y-2 w-fit">
                     <label htmlFor="model">Model</label>
-                    <select name="model" id="model">
+                    <select name="model" id="model" className="border-[1px] rounded-xl border-gray-300">
                         {ollamaLocalModels.map((model) => (
                             <option key={model} value={model}>{model}</option>
                         ))}
                     </select>
                 </div>
-                <button type="submit">Save</button>
+                <button 
+                    title="Save Settings" 
+                    className="mt-2 cursor-pointer" 
+                    type="submit"
+                >
+                    <Save size={16} />
+                </button>
             </form>
         </div>
     )

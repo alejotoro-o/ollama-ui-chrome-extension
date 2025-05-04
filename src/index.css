@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-body {
+#root {
   margin: 2px;
   width: 320px;
   max-height: 420px;
